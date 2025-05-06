@@ -1,33 +1,28 @@
-import { useState } from 'react'
+import { JSX, useState } from 'react'
 import AddTaskForm from './components/AddTaskForm';
 import TodoList from './components/TodoList';
 import './styles/style.css';
+import { DataProps } from './types';
 
-type DataProps = {
-  id: number;
-  todoTxt: string;
-  status: boolean;
-}
-
-function App() {
+function App():JSX.Element {
   const [data, setData] = useState<DataProps[]>([]);
   const [count, setCount] = useState(0);
 
-  const handleEntryClick = (e:React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const elemTodoInputText = document.querySelector('.todo-input-text') as HTMLInputElement;
-    const taskTxt = elemTodoInputText.value;
-    if(!taskTxt) {
-      return;
-    };
+  const handleAddTask = (taskText: string): void => {
+    // e.preventDefault();
+    // const elemTodoInputText = document.querySelector('.todo-input-text') as HTMLInputElement;
+    // const taskTxt = taskText;
+    // if(!taskTxt) return;
     setData((prevState) => {
-      const itemData = {id: count, todoTxt: taskTxt, status: false};
+      const itemData = {id: count, todoTxt: taskText, status: false};
       return [itemData, ...prevState];
     });
     setCount((prevState) => prevState + 1);
-    elemTodoInputText.value = '';
+    // console.log('data:', data);
+    // if(inputRef.current) inputRef.current.value = '';
   };
-  const handleChange = (id:number) => {
+
+  const handleChange = (id:number): void => {
     setData(prevState => {
       const newData = prevState.map((item) => {
         if(item.id === id) {
@@ -44,7 +39,7 @@ function App() {
     });
   };
 
-  const handleClick = (id:number) => {
+  const handleClick = (id:number): void => {
     setData((data) => {
       return data.filter((item) => {
         return item.id !== id;
@@ -56,16 +51,14 @@ function App() {
     <main role="main">
       <h1 className="page-title">Javascript演習<span className="page-main-title">Todoリスト</span></h1>
       <div className="todolist-wrap">
-          <form>
-            <AddTaskForm
-              handleEntryClick={handleEntryClick}
-            />
-            <TodoList
-              handleChange={handleChange}
-              handleClick={handleClick}
-              data={data}
-            />
-          </form>
+        <AddTaskForm
+          onAddTask={handleAddTask}
+        />
+        <TodoList
+          handleChange={handleChange}
+          handleClick={handleClick}
+          data={data}
+        />
       </div>
     </main>
   )

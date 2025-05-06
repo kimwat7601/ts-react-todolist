@@ -1,11 +1,6 @@
 import { FC } from 'react';
 import TodoListItem from './TodoListItem';
-
-type DataProps = {
-    id: number;
-    todoTxt: string;
-    status: boolean;
-}
+import { DataProps } from '../types';
 
 type TodoListProps = {
     data: DataProps[];
@@ -14,11 +9,7 @@ type TodoListProps = {
 }
 
 const TodoList:FC<TodoListProps> = ({data, handleChange, handleClick}) => {
-    // const [data, setData] = useState({});
 
-    // const handleChange = () => {};
-
-    // const handleClick = () => {};
 
     return (
         <div className="todolist-listWrap">
@@ -28,6 +19,7 @@ const TodoList:FC<TodoListProps> = ({data, handleChange, handleClick}) => {
                         key = {item.id}
                         handleChange={() => handleChange(item.id)}
                         handleClick={() => handleClick(item.id)}
+                        isCheck={item.status}
                     >
                         {item.todoTxt}
                     </TodoListItem>

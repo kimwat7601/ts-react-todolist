@@ -6,9 +6,10 @@ type TodoListProps = {
     children: React.ReactNode;
     handleChange: () => void;
     handleClick: () => void;
+    isCheck: boolean;
 }
 
-const TodoListItem: FC<TodoListProps> = ({children, handleChange, handleClick}) => {
+const TodoListItem: FC<TodoListProps> = ({children, handleChange, handleClick, isCheck}) => {
     // const [data, setData] = useState({});
 
     return (
@@ -16,8 +17,9 @@ const TodoListItem: FC<TodoListProps> = ({children, handleChange, handleClick}) 
             <span className="todotext-wrap">
                 <CheckBox
                     type='checkbox'
-                    className='todo-check'
+                    className='todo-checkBox'
                     onChange={handleChange}
+                    checked={isCheck}
                 />
                 <span className="todo-text">{children}</span>
             </span>

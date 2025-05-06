@@ -42,4 +42,4 @@
 }
 .todolist-wrap .todolist-listWrap .todolist .todolist__item .todo-checkBox:checked + .todo-text {
   text-decoration: line-through;
-}/*# sourceMappingURL=style.css.map */
+}
