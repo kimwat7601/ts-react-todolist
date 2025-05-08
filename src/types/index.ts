@@ -1,7 +1,7 @@
 type DataProps = {
-    id: number;
-    todoTxt: string;
-    status: boolean;
-  }
+  id: number;
+  todoTxt: string;
+  status: boolean;
+}
 
-  export type {DataProps};
+export type {DataProps};

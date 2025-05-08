@@ -43,3 +43,9 @@
 .todolist-wrap .todolist-listWrap .todolist .todolist__item .todo-checkBox:checked + .todo-text {
   text-decoration: line-through;
 }
+.todolist-wrap .todolist-listWrap .todolist .todolist__item .todo-text.is-hide {
+  display: none;
+}
+.todolist-wrap .todolist-listWrap .todolist .todolist__item .todo-edit.is-hide {
+  display: none;
+}

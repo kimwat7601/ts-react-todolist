@@ -9,17 +9,11 @@ function App():JSX.Element {
   const [count, setCount] = useState(0);
 
   const handleAddTask = (taskText: string): void => {
-    // e.preventDefault();
-    // const elemTodoInputText = document.querySelector('.todo-input-text') as HTMLInputElement;
-    // const taskTxt = taskText;
-    // if(!taskTxt) return;
     setData((prevState) => {
       const itemData = {id: count, todoTxt: taskText, status: false};
       return [itemData, ...prevState];
     });
     setCount((prevState) => prevState + 1);
-    // console.log('data:', data);
-    // if(inputRef.current) inputRef.current.value = '';
   };
 
   const handleChange = (id:number): void => {
@@ -47,6 +41,21 @@ function App():JSX.Element {
     });
   };
 
+  const handleEditSave = (id: number, task: string): void => {
+    setData((data) => {
+      return data.map((item) => {
+        if(item.id === id) {
+          return {
+            ...item,
+            todoTxt: task
+          }
+        } else {
+          return item;
+        }
+      });
+    });
+  };
+
   return (
     <main role="main">
       <h1 className="page-title">Javascript演習<span className="page-main-title">Todoリスト</span></h1>
@@ -57,6 +66,7 @@ function App():JSX.Element {
         <TodoList
           handleChange={handleChange}
           handleClick={handleClick}
+          handleEditSave={handleEditSave}
           data={data}
         />
       </div>
