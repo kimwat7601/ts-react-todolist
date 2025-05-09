@@ -3,17 +3,28 @@ import AddTaskForm from './components/AddTaskForm';
 import TodoList from './components/TodoList';
 import './styles/style.css';
 import { DataProps } from './types';
+import MyStorage from './components/Storage';
+
+const storage = new MyStorage('todoList');
+const initData: DataProps[] | null = storage.getItem('todoListData');
 
 function App():JSX.Element {
-  const [data, setData] = useState<DataProps[]>([]);
-  const [count, setCount] = useState(0);
+  const [data, setData] = useState<DataProps[]>(initData ? initData : []);
+  // const [count, setCount] = useState(0);
+
+  const saveData = (data: DataProps[]):void => {
+    storage.setItem('todoListData', data);
+    storage.save();
+  };
 
   const handleAddTask = (taskText: string): void => {
     setData((prevState) => {
-      const itemData = {id: count, todoTxt: taskText, status: false};
-      return [itemData, ...prevState];
+      const itemData = {id: Date.now(), todoTxt: taskText, status: false};
+      const upDateData = [itemData, ...prevState];
+      saveData(upDateData);
+      return upDateData;
     });
-    setCount((prevState) => prevState + 1);
+    // setCount((prevState) => prevState + 1);
   };
 
   const handleChange = (id:number): void => {
@@ -29,21 +40,24 @@ function App():JSX.Element {
           return item;
         }
       });
+      saveData(newData);
       return newData;
     });
   };
 
   const handleClick = (id:number): void => {
     setData((data) => {
-      return data.filter((item) => {
+      const newData = data.filter((item) => {
         return item.id !== id;
       });
+      saveData(newData);
+      return newData;
     });
   };
 
   const handleEditSave = (id: number, task: string): void => {
     setData((data) => {
-      return data.map((item) => {
+      const newData = data.map((item) => {
         if(item.id === id) {
           return {
             ...item,
@@ -53,6 +67,8 @@ function App():JSX.Element {
           return item;
         }
       });
+      saveData(newData);
+      return newData;
     });
   };
 
